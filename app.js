@@ -7,35 +7,13 @@
         this.where = where;
         this.when = when;
         this.fact = fact;
+        this.image = "./images/" + species.split(' ').join('').toLowerCase() + ".png";
 
         
     }
 
     // Create Dino Objects
-
-    function createDinos() {
-
-               
-        fetch('./dino.json')
-        .then(response => response.json())
-        .then(function(data){
-            const obj = data['Dinos'];
-            const dinoArray = [];
-            for(let i =0; i<8; i++) {
-
-                dinoArray.push(obj[i]);
-                                
-            }
-
-            generateTiles(dinoArray);
-            
-            
-            
-            
-        });
-        
-       
-    }
+    
 
 
     // Create Human Object
@@ -61,11 +39,13 @@
 
     // Remove form from screen
 
-function generateTiles(dinoArray){
-    for(let i=0; i<8; i++){
+function generateTiles(){
+    console.log(dinos);
+    for(let i in dinos){
 
-        grid.innerHTML += "<div class='grid-item'> " + dinoArray[i].species +"</div>";
-        console.log(dinoArray[i]);
+        grid.innerHTML += "<div class='grid-item'> " + dinos[i].species;
+        grid.innerHTML += "<img src=" + dinos[i].image + "></div>";
+        console.log(dinos[i]);
     }
 
 }
@@ -78,10 +58,17 @@ const form = document.getElementById('dino-compare');
 const grid = document.getElementById('grid');
 button.addEventListener('click', hideFormShowGrid);
 
+let dinos= [];
+                    
+fetch('./dino.json')
+    .then(response => response.json())
+    .then(json => dinos = json.Dinos.map(dino => new Dino(dino.species, dino.weight, dino.diet, dino.where, dino.when, dino.fact)));          
+         
+
 
 function hideFormShowGrid() {
     form.style.display = 'none'; 
-    createDinos();
+    generateTiles();
  
     
 }

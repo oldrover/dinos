@@ -1,27 +1,35 @@
     // Create Dino Constructor
-    function Creature(species, weight, height, diet, where, when, fact) {
+    function Creature(species, weight, height, diet) {
         this.species = species;
         this.weight = weight;
         this.height = height;
-        this.diet = diet;
-        this.where = where;
-        this.when = when;
-        this.fact = fact;
+        this.diet = diet;        
         this.image = "./images/" + species.split(' ').join('').toLowerCase() + ".png";
 
         
     }
 
     // Create Dino Objects
+    function Dino(species, weight, height, diet, where, when, fact){
+        Creature.call(this, species, weight, height, diet);
+        this.where = where;
+        this.when = when;
+        this.fact = fact;
+    }
+
+    Dino.prototype = Object.create(Creature.prototype);
     
 
 
     // Create Human Object
-    const human = {
-        species :'human'                
+    function Human(weight,height, diet, name) {
+        Creature.call(this, weight, height, diet);
+
+        this.name = name;
     };
 
-    human.prototype = Creature;
+    Human.prototype = Object.create(Creature.prototype);
+    
 
 
     // Use IIFE to get human data from form
@@ -41,11 +49,10 @@
 
     // Generate Tiles for each Dino in Array
   
-        // Add tiles to DOM
-
-    // Remove form from screen
-
 function generateTiles(){
+
+
+
     console.log(dinos);
     for(let i in dinos){
 
@@ -54,12 +61,8 @@ function generateTiles(){
         +"</h3><img src=" + dinos[i].image + ">" 
         +"<p>" + dinos[i].fact +"</p>"
         +"</div>";
-        
-        console.log(dinos[i]);
-        
     }
-    console.log(human);
-
+    
 }
 
 
@@ -69,17 +72,20 @@ const form = document.getElementById('dino-compare');
 const grid = document.getElementById('grid');
 button.addEventListener('click', hideFormShowGrid);
 let dinos= [];
-                    
+
+
+//read json file and add th dinos array                    
 fetch('./dino.json')
     .then(response => response.json())
-    .then(json => dinos = json.Dinos.map(dino => new Creature(dino.species, dino.weight, dino.height, dino.diet, dino.where, dino.when, dino.fact)));          
+    .then(json => dinos = json.Dinos.map(dino => new Dino(dino.species, dino.weight, dino.height, dino.diet, dino.where, dino.when, dino.fact)));          
          
 
+// Add tiles to DOM
+// Remove form from screen
 function hideFormShowGrid() {
     form.style.display = 'none'; 
     generateTiles();
- 
-    
+     
 }
 
 

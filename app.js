@@ -14,15 +14,20 @@
         this.where = where;
         this.when = when;
         this.fact = fact;
+
+        this.tellUsAFact = function(){
+            return this.fact;
+        };
+        
     }
 
     Dino.prototype = Object.create(Creature.prototype);
    
-    // Create Human Object
+    // Create Human Object   
     function Human(weight,height, diet, name) {
         Creature.call(this, 'Homo Sapiens', weight, height, diet);
 
-        this.fact = name;
+        this.name = name;        
     };
 
     Human.prototype = Object.create(Creature.prototype);
@@ -30,9 +35,15 @@
     // Create Dino Compare Method 1
     // NOTE: Weight in JSON file is in lbs, height in inches. 
 
+    const compareWeight = {
+
+    }
     
     // Create Dino Compare Method 2
     // NOTE: Weight in JSON file is in lbs, height in inches.
+    const compareHeight = {
+
+    }
 
     
     // Create Dino Compare Method 3
@@ -47,11 +58,16 @@ function generateTiles(){
 
     for(let item in gridItems){
 
-        grid.innerHTML += 
-        "<div class='grid-item'><h3>" + gridItems[item].species 
-        +"</h3><img src=" + gridItems[item].image + ">" 
-        +"<p>" + gridItems[item].fact +"</p>"
-        +"</div>";
+        let appendString = "<div class='grid-item'><h3>" + gridItems[item].species
+        +"</h3><img src=" + gridItems[item].image + "><p>";
+        
+        gridItems[item] instanceof Human 
+            ? appendString += gridItems[item].name 
+            : appendString += gridItems[item].tellUsAFact();
+
+        grid.innerHTML += appendString + "</p></div>";
+
+        
     }
     
 }
@@ -78,19 +94,15 @@ fetch('./dino.json')
 function hideFormShowGrid() {
     
     // Use IIFE to get human data from form
-    human = (function(){
+    human = (function (){
         formData = new FormData(form);    
-        let height = formData.get('feet');
-    
+        let height = parseInt(formData.get('feet'))*12 + parseInt(formData.get('inches'));
+            
         return new Human(formData.get('weight'),height, formData.get('diet'), formData.get('name'));
        })();
+
     form.style.display = 'none'; 
     generateTiles();
      
 }
 
-
-
-
-
- 

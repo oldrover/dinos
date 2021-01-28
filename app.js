@@ -15,8 +15,11 @@
         this.when = when;
         this.fact = fact;
 
-        this.tellUsAFact = function(){
-            return this.fact;
+        this.getAFact = function(){
+            let factArray = [this.compareWeight(this.weight), this.height, this.where, this.when, this.fact]
+            let randomIndex = Math.floor(Math.random()* factArray.length);
+            return this.species === 'Pigeon' ? this.fact :factArray[randomIndex];
+            
         };
         
     }
@@ -35,19 +38,29 @@
     // Create Dino Compare Method 1
     // NOTE: Weight in JSON file is in lbs, height in inches. 
 
-    const compareWeight = {
+    Dino.prototype.compareWeight = function(weight) {
 
-    }
+        return "it weight x times more than you!";
+
+    };
     
     // Create Dino Compare Method 2
     // NOTE: Weight in JSON file is in lbs, height in inches.
-    const compareHeight = {
+    Dino.prototype.compareHeight = function(height){
 
-    }
+        return "it is x times higher than you!";
+
+    };
 
     
     // Create Dino Compare Method 3
     // NOTE: Weight in JSON file is in lbs, height in inches.
+
+    Dino.prototype.compareDiet = function(diet) {
+
+        return "it is also a omnivore";
+
+    };
 
 
 // Generate Tiles for each Dino in Array  
@@ -63,7 +76,7 @@ function generateTiles(){
         
         gridItems[item] instanceof Human 
             ? appendString += gridItems[item].name 
-            : appendString += gridItems[item].tellUsAFact();
+            : appendString += gridItems[item].getAFact();
 
         grid.innerHTML += appendString + "</p></div>";
 

@@ -32,7 +32,7 @@
 
     // Dino method for getting a random fact
     Dino.prototype.getAFact = function(){
-        let factArray = 
+        const factArray = 
             [this.compareWeight(this.weight), 
             this.compareHeight(this.height), 
             this.where, this.when, 

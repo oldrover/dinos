@@ -1,4 +1,4 @@
-    // Create Dino Constructor
+    // Creature Constructor 
     function Creature(species, weight, height, diet) {
         this.species = species;
         this.weight = weight;
@@ -7,7 +7,7 @@
         this.image = "./images/" + species.split(' ').join('').toLowerCase() + ".png"; 
     }
 
-    // Create Dino Objects
+    // Dino Constructor inherits from Creature
     function Dino(species, weight, height, diet, where, when, fact){
         Creature.call(this, species, weight, height, diet);
         
@@ -31,7 +31,7 @@
 
     Dino.prototype = Object.create(Creature.prototype);
    
-    // Create Human Object   
+    // Human Constructor inherits from Creature  
     function Human(weight,height, diet, name) {
         Creature.call(this, 'Homo Sapiens', weight, height, diet);
 
@@ -41,7 +41,7 @@
     Human.prototype = Object.create(Creature.prototype);
     
     // Create Dino Compare Method 1
-    // NOTE: Weight in JSON file is in lbs, height in inches. 
+    // Compares dino weight with human weight 
     Dino.prototype.compareWeight = function(weight) {
 
         const weightComparison = weight/human.weight;
@@ -53,7 +53,7 @@
     };
     
     // Create Dino Compare Method 2
-    // NOTE: Weight in JSON file is in lbs, height in inches.
+    // Compares dino height with human height
     Dino.prototype.compareHeight = function(height){
 
         const heightComparison = height/human.height;
@@ -65,7 +65,7 @@
 
     
     // Create Dino Compare Method 3
-    // NOTE: Weight in JSON file is in lbs, height in inches.
+    // Compares dino diet with human diet
     Dino.prototype.compareDiet = function(diet) {
 
         return human.diet.toLowerCase() === diet
@@ -74,7 +74,7 @@
     };
 
 
-    // Generate Tiles for each Dino in Array  
+    // Generates Tiles for each Dino in Array  
     function generateTiles(){
 
         gridItems.splice(4,0,human);
@@ -92,12 +92,27 @@
             grid.innerHTML += appendString + "</p></div>";
 
         
-    }
+        }
     
-}
+    }
+    // Adds tiles to DOM
+    // Removes form from screen
+    function hideFormShowGrid() {
+    
+        // Uses IIFE to get human data from form
+        human = (function (){
+            formData = new FormData(form);    
+            let height = parseInt(formData.get('feet'))*12 + parseInt(formData.get('inches'));
+            
+            return new Human(formData.get('weight'),height, formData.get('diet'), formData.get('name'));
+        })();
+
+        form.style.display = 'none'; 
+        generateTiles();     
+    }
 
 
-// On button click, prepare and display infographic
+
 const button = document.getElementById('btn');
 const form = document.getElementById('dino-compare');
 const grid = document.getElementById('grid');
@@ -107,26 +122,11 @@ button.addEventListener('click', hideFormShowGrid);
 let human = {};
 let gridItems= [];
 
-//read json file and add th dinos array                    
+//read json file and add items to the gridItems array                    
 fetch('./dino.json')
     .then(response => response.json())
     .then(json => gridItems = json.Dinos.map(dino => new Dino(dino.species, dino.weight, dino.height, dino.diet, dino.where, dino.when, dino.fact)));          
          
 
-// Add tiles to DOM
-// Remove form from screen
-function hideFormShowGrid() {
-    
-    // Use IIFE to get human data from form
-    human = (function (){
-        formData = new FormData(form);    
-        let height = parseInt(formData.get('feet'))*12 + parseInt(formData.get('inches'));
-            
-        return new Human(formData.get('weight'),height, formData.get('diet'), formData.get('name'));
-       })();
 
-    form.style.display = 'none'; 
-    generateTiles();
-     
-}
 

@@ -7,29 +7,18 @@
         this.image = "./images/" + species.split(' ').join('').toLowerCase() + ".png"; 
     }
 
+
     // Dino Constructor inherits from Creature
     function Dino(species, weight, height, diet, where, when, fact){
         Creature.call(this, species, weight, height, diet);
         
         this.where = "It lived at " + where;
         this.when = "It lived in " + when;
-        this.fact = fact;
-
-        this.getAFact = function(){
-            let factArray = 
-                [this.compareWeight(this.weight), 
-                this.compareHeight(this.height), 
-                this.where, this.when, 
-                this.compareDiet(this.diet),
-                this.fact];
-            let randomIndex = Math.floor(Math.random()* factArray.length);
-            return this.species === 'Pigeon' ? this.fact :factArray[randomIndex];
-            
-        };
-        
+        this.fact = fact;  
     }
 
     Dino.prototype = Object.create(Creature.prototype);
+
    
     // Human Constructor inherits from Creature  
     function Human(weight,height, diet, name) {
@@ -39,6 +28,20 @@
     };
 
     Human.prototype = Object.create(Creature.prototype);
+
+
+    // Dino method for getting a random fact
+    Dino.prototype.getAFact = function(){
+        let factArray = 
+            [this.compareWeight(this.weight), 
+            this.compareHeight(this.height), 
+            this.where, this.when, 
+            this.compareDiet(this.diet),
+            this.fact];
+        let randomIndex = Math.floor(Math.random()* factArray.length);
+        return this.species === 'Pigeon' ? this.fact :factArray[randomIndex];
+        
+    };
     
     // Create Dino Compare Method 1
     // Compares dino weight with human weight 

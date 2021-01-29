@@ -11,12 +11,17 @@
     function Dino(species, weight, height, diet, where, when, fact){
         Creature.call(this, species, weight, height, diet);
         
-        this.where = where;
-        this.when = when;
+        this.where = "It lived at " + where;
+        this.when = "It lived in " + when;
         this.fact = fact;
 
         this.getAFact = function(){
-            let factArray = [this.compareWeight(this.weight), this.height, this.where, this.when, this.fact]
+            let factArray = 
+                [this.compareWeight(this.weight), 
+                this.compareHeight(this.height), 
+                this.where, this.when, 
+                this.compareDiet(this.diet),
+                this.fact];
             let randomIndex = Math.floor(Math.random()* factArray.length);
             return this.species === 'Pigeon' ? this.fact :factArray[randomIndex];
             
@@ -40,7 +45,7 @@
 
     Dino.prototype.compareWeight = function(weight) {
 
-        return "it weight x times more than you!";
+        return "it x times heavier more than you!";
 
     };
     
@@ -48,7 +53,7 @@
     // NOTE: Weight in JSON file is in lbs, height in inches.
     Dino.prototype.compareHeight = function(height){
 
-        return "it is x times higher than you!";
+        return "it is x times higher than you!" + human.height;
 
     };
 
@@ -58,8 +63,9 @@
 
     Dino.prototype.compareDiet = function(diet) {
 
-        return "it is also a omnivore";
-
+        return human.diet.toLowerCase() === diet
+            ? "It is a " + diet + " like you!" 
+            : "Unlike you it is a " + diet + "!";
     };
 
 

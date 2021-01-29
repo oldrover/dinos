@@ -42,7 +42,6 @@
     
     // Create Dino Compare Method 1
     // NOTE: Weight in JSON file is in lbs, height in inches. 
-
     Dino.prototype.compareWeight = function(weight) {
 
         const weightComparison = weight/human.weight;
@@ -67,7 +66,6 @@
     
     // Create Dino Compare Method 3
     // NOTE: Weight in JSON file is in lbs, height in inches.
-
     Dino.prototype.compareDiet = function(diet) {
 
         return human.diet.toLowerCase() === diet

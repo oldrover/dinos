@@ -45,7 +45,11 @@
 
     Dino.prototype.compareWeight = function(weight) {
 
-        return "it x times heavier more than you!";
+        const weightComparison = weight/human.weight;
+
+        return weightComparison > 1 
+            ? "It was " + weightComparison + " times heavier more than you!"
+            : "It was even lighter than you!";
 
     };
     
@@ -53,8 +57,11 @@
     // NOTE: Weight in JSON file is in lbs, height in inches.
     Dino.prototype.compareHeight = function(height){
 
-        return "it is x times higher than you!" + human.height;
+        const heightComparison = height/human.height;
 
+        return heightComparison > 1 
+            ? "It was " + heightComparison + " times higher than you!"
+            : "It was even smaller than you!";
     };
 
     
@@ -69,22 +76,22 @@
     };
 
 
-// Generate Tiles for each Dino in Array  
-function generateTiles(){
+    // Generate Tiles for each Dino in Array  
+    function generateTiles(){
 
-    gridItems.splice(4,0,human);
-    console.log(gridItems);
+        gridItems.splice(4,0,human);
+        console.log(gridItems);
 
-    for(let item in gridItems){
+        for(let item in gridItems){
 
-        let appendString = "<div class='grid-item'><h3>" + gridItems[item].species
-        +"</h3><img src=" + gridItems[item].image + "><p>";
+            let appendString = "<div class='grid-item'><h3>" + gridItems[item].species
+            +"</h3><img src=" + gridItems[item].image + "><p>";
         
-        gridItems[item] instanceof Human 
-            ? appendString += gridItems[item].name 
-            : appendString += gridItems[item].getAFact();
+            gridItems[item] instanceof Human 
+                ? appendString += gridItems[item].name 
+                : appendString += gridItems[item].getAFact();
 
-        grid.innerHTML += appendString + "</p></div>";
+            grid.innerHTML += appendString + "</p></div>";
 
         
     }

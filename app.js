@@ -4,7 +4,7 @@
         this.weight = weight;
         this.height = height;
         this.diet = diet;        
-        this.image = "./images/" + species.split(' ').join('').toLowerCase() + ".png"; 
+        this.image = './images/' + species.split(' ').join('').toLowerCase() + '.png'; 
     }
 
 
@@ -12,8 +12,8 @@
     function Dino(species, weight, height, diet, where, when, fact){
         Creature.call(this, species, weight, height, diet);
         
-        this.where = "It lived at " + where;
-        this.when = "It lived in " + when;
+        this.where = 'It lived at ' + where;
+        this.when = 'It lived in ' + when;
         this.fact = fact;  
     }
 
@@ -49,9 +49,9 @@
 
         const weightComparison = weight/human.weight;
 
-        return weightComparison >= 1.2 ? "It was " + Math.floor(weightComparison*10)/10 + " times heavier than you!"
-            : weightComparison < 1.2 && weightComparison > 0.8 ? "It was about your weight!"
-            : "It was even lighter than you!";
+        return weightComparison >= 1.2 ? 'It was ' + Math.floor(weightComparison*10)/10 + ' times heavier than you!'
+            : weightComparison < 1.2 && weightComparison > 0.8 ? 'It was about your weight!'
+            : 'It was even lighter than you!';
 
     };
     
@@ -61,9 +61,9 @@
 
         const heightComparison = height/human.height;
 
-        return heightComparison >= 1.2 ? "It was " + Math.floor(heightComparison*10)/10 + " times higher than you!"
-            : heightComparison < 1.2 && heightComparison >0.8 ? "It was about your height!"
-            : "It was even smaller than you!";
+        return heightComparison >= 1.2 ? 'It was ' + Math.floor(heightComparison*10)/10 + ' times higher than you!'
+            : heightComparison < 1.2 && heightComparison >0.8 ? 'It was about your height!'
+            : 'It was even smaller than you!';
     };
 
     
@@ -72,8 +72,8 @@
     Dino.prototype.compareDiet = function(diet) {
 
         return human.diet.toLowerCase() === diet
-            ? "It was a " + diet + " like you!" 
-            : "Unlike you it was a " + diet + "!";
+            ? 'It was a ' + diet + ' like you!' 
+            : 'Unlike you it was a ' + diet + '!';
     };
 
 
@@ -81,19 +81,17 @@
     function generateTiles(){
 
         gridItems.splice(4,0,human);
-        console.log(gridItems);
-
+        
         for(let item in gridItems){
 
-            let appendString = "<div class='grid-item'><h3>" + gridItems[item].species
-            +"</h3><img src=" + gridItems[item].image + "><p>";
+            let appendString = '<div class=\'grid-item\'><h3>';
         
-            gridItems[item] instanceof Human 
-                ? appendString += gridItems[item].name 
-                : appendString += gridItems[item].getAFact();
+            gridItems[item] instanceof Human  
+                ? appendString += gridItems[item].name +'</h3><img src=' + gridItems[item].image + '>'
 
-            grid.innerHTML += appendString + "</p></div>";
+                : appendString+= gridItems[item].species +'</h3><img src=' + gridItems[item].image + '><p>' + gridItems[item].getAFact() + '</p>';
 
+            grid.innerHTML += appendString + '</div>';
         
         }
     

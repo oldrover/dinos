@@ -47,8 +47,8 @@
 
         const weightComparison = weight/human.weight;
 
-        return weightComparison > 1 
-            ? "It was " + weightComparison + " times heavier more than you!"
+        return weightComparison >= 1.2 ? "It was " + Math.floor(weightComparison*10)/10 + " times heavier than you!"
+            : weightComparison < 1.2 && weightComparison > 0.8 ? "It was about your weight!"
             : "It was even lighter than you!";
 
     };
@@ -59,8 +59,8 @@
 
         const heightComparison = height/human.height;
 
-        return heightComparison > 1 
-            ? "It was " + heightComparison + " times higher than you!"
+        return heightComparison >= 1.2 ? "It was " + Math.floor(heightComparison*10)/10 + " times higher than you!"
+            : heightComparison < 1.2 && heightComparison >0.8 ? "It was about your height!"
             : "It was even smaller than you!";
     };
 
@@ -71,8 +71,8 @@
     Dino.prototype.compareDiet = function(diet) {
 
         return human.diet.toLowerCase() === diet
-            ? "It is a " + diet + " like you!" 
-            : "Unlike you it is a " + diet + "!";
+            ? "It was a " + diet + " like you!" 
+            : "Unlike you it was a " + diet + "!";
     };
 
 
